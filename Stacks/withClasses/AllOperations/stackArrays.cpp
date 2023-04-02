@@ -104,28 +104,31 @@ public:
         return (top == -1) ? true : false;
     }
 
+    int precedence(char c)
+    {
+        if (c == '{')
+            return 3;
+        else if (c == '[')
+            return 2;
+        else if (c == '(')
+            return 1;
+        else
+            return -1; // for paranthesis
+    }
     bool checkBraces(string exp)
     {
-        int priority = 0;
-        int incoming_proiority = 0;
         for (int i = 0; i < exp.length(); i++)
         {
-            // // checking priority
-            // if (exp[i] == '{')
-            //     incoming_proiority = 3;
-            // else if (exp[i] == '[')
-            //     incoming_proiority = 2;
-            // else if (exp[i] == '(')
-            //     incoming_proiority = 1;
-            // //--------
-            // if (top = -1)
-            //     priority = incoming_proiority;
-
-            // if (incoming_proiority <= priority)
-            // {
-            //     cout << "\nif runned ---\n";
-            if (exp[i] == '(' || exp[i] == '{' || exp[i] == '[')
+            if ((exp[i] == '(' || exp[i] == '{' || exp[i] == '[') && top == -1)
                 pushChar(exp[i]);
+
+            else if ((exp[i] == '(' || exp[i] == '{' || exp[i] == '[') && top != -1)
+            {
+                if (precedence(exp[i]) < precedence(peekChar()))
+                    pushChar(exp[i]);
+                else
+                    return false;
+            }
 
             else if (exp[i] == ')')
             {
@@ -134,6 +137,7 @@ public:
                 else
                     return false;
             }
+
             else if (exp[i] == '}')
             {
                 if (peekChar() == '{')
@@ -150,15 +154,7 @@ public:
             }
             else
                 return false;
-
-            priority = incoming_proiority;
         }
-        // else
-        // {
-        //     cout << "\nelse runned\n";
-        //     return false;
-        // }
-        // }
         return isEmpty();
     }
 };
@@ -190,7 +186,7 @@ int main()
         cout << "Press 2 to pop element -->" << endl;
         cout << "Press 3 to display element -->" << endl;
         cout << "Press 4 to check for Palindrom -->" << endl;
-        cout << "Press 5 to REverse a String -->" << endl;
+        cout << "Press 5 to `1`REverse a String -->" << endl;
         cout << "Press 6 to check valid Expression -->" << endl;
         cout << "Press 7 to check isEmpty() -->" << endl;
         cout << "Press 0 to exit -->" << endl;
@@ -211,7 +207,7 @@ int main()
             cout << "Reverse of word is " << reverseString() << endl;
         else if (n == 6)
         {
-            string exp = "{a[(bc)s]}";
+            string exp = "[{())]}";
             string x = st.checkBraces(exp) ? "\nValid Expression" : "\nIn-Valid Expression";
             cout << x << endl;
         }
