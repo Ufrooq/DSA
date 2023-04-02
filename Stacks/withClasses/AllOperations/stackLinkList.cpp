@@ -23,7 +23,7 @@ public:
         {
             top->next = newNode;
             newNode->prev = top;
-            top = top->next;
+            top = newNode;
         }
     }
     void pop()
@@ -55,7 +55,7 @@ int main()
     {
         cout << "\nPress 1 to push element -->" << endl;
         cout << "Press 2 to pop element -->" << endl;
-        cout << "Press 3 to display element -->" << endl;
+        cout << "Press 9 to display element -->" << endl;
         cout << "Press 0 to exit -->" << endl;
         cout << "Enter : ";
         cin >> n;
@@ -68,7 +68,7 @@ int main()
         }
         else if (n == 2)
             st.pop();
-        else if (n == 3)
+        else if (n == 9)
             st.peek();
         else if (n == 0)
             break;

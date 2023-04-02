@@ -1,18 +1,44 @@
 #include <iostream>
 #include <stack>
 using namespace std;
-int main()
-{
 
-    stack<int> s;
-    for (int i = 6; i <= 10; i++)
-        s.push(i);
-    cout << s.size() << endl;
-    cout << "Before POP " << s.top() << endl;
-    s.pop();
-    s.pop();
-    s.pop();
-    cout << "After POP " << s.top() << endl;
-    cout << s.size() << endl;
-    return 0;
+int priority(char c)
+{
+    if (c == '^')
+        return 3;
+    else if (c == '*' || c == '/')
+        return 2;
+    else if (c == '+' || c == '-')
+        return 1;
+    else
+        return -1;
+}
+
+string infixToPostfix(string str)
+{
+    stack<char> st;
+    string result;
+    for (int i = 0; i < str.length(); i++)
+    {
+        if ((str[i] == 'a' && str[i] == 'z') || (str[i] == 'A' && str[i] == 'Z'))
+            result += str[i];
+        else if (str[i] == '(')
+            st.push(str[i]);
+        else if (str[i] == ')')
+        {
+            while (!st.empty() && str.top() != '(')
+            {
+                result += st.top();
+                st.pop();
+            }
+            if (!st.empty())
+                st.pop();
+        }
+        else
+        {
+        }
+    }
+}
+int main(){
+
 };
