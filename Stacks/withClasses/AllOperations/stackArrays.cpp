@@ -207,7 +207,7 @@ int main()
             cout << "Reverse of word is " << reverseString() << endl;
         else if (n == 6)
         {
-            string exp = "[{())]}";
+            string exp = "())";
             string x = st.checkBraces(exp) ? "\nValid Expression" : "\nIn-Valid Expression";
             cout << x << endl;
         }

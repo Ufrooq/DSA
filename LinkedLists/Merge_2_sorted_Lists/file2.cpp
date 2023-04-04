@@ -6,6 +6,7 @@ struct Node
     int id;
     Node *next = NULL;
 };
+
 Node *head1 = NULL;
 Node *tail1 = NULL;
 Node *head2 = NULL;

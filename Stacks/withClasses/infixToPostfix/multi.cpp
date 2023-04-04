@@ -41,17 +41,17 @@ public:
         else
             return -1; // for paranthesis
     }
-    // int precedence(char c)
-    // {
-    //     if (c == '{')
-    //         return 3;
-    //     else if (c == '[')
-    //         return 2;
-    //     else if (c == '(')
-    //         return 1;
-    //     else
-    //         return -1; // for paranthesis
-    // }
+    int precedence_braces(char c)
+    {
+        if (c == '{')
+            return 3;
+        else if (c == '[')
+            return 2;
+        else if (c == '(')
+            return 1;
+        else
+            return -1; // for paranthesis
+    }
 
     string infixTOPostfix(string str)
     {
@@ -61,23 +61,39 @@ public:
             if ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))
                 postfixExp += str[i];
 
-            else if (str[i] == '(')
+            else if ((str[i] == '(' || str[i] == '{' || str[i] == '[') && TOP_paranthesis == -1)
             {
                 push(paranthesisArray, str[i], &TOP_paranthesis);
                 push(postfixArray, str[i], &TOP_array);
             }
 
+            else if ((str[i] == '(' || str[i] == '{' || str[i] == '[') && TOP_paranthesis != -1)
+            {
+                if (precedence_braces(str[i]) < precedence_braces(peek(paranthesisArray, &TOP_paranthesis)))
+                {
+                    push(paranthesisArray, str[i], &TOP_paranthesis);
+                    push(postfixArray, str[i], &TOP_array);
+                }
+                else
+                    return false;
+            }
+
             else if (str[i] == ')')
             {
-                pop(paranthesisArray, &TOP_paranthesis);
-                while (!isEmpty(&TOP_array) && peek(postfixArray, &TOP_array) != '(')
+                if (peek(paranthesisArray, &TOP_paranthesis) == ')')
                 {
-                    postfixExp += peek(postfixArray, &TOP_array);
-                    pop(postfixArray, &TOP_array);
+                    pop(paranthesisArray, &TOP_paranthesis);
+                    while (!isEmpty(&TOP_array) && peek(postfixArray, &TOP_array) != '(')
+                    {
+                        postfixExp += peek(postfixArray, &TOP_array);
+                        pop(postfixArray, &TOP_array);
+                    }
+                    // to pop the opening bracket
+                    if (!isEmpty(&TOP_array))
+                        pop(postfixArray, &TOP_array);
                 }
-                // to pop the opening bracket
-                if (!isEmpty(&TOP_array))
-                    pop(postfixArray, &TOP_array);
+                else
+                    return "\nExpression was invalid -->\n";
             }
             else
             {
@@ -143,7 +159,7 @@ int main()
         }
         else if (n == 5)
         {
-            string expression = "A+B/C+D*(E-F))^G";
+            string expression = "A+B/C+D*(E-F)^G";
             cout << "\nPostfix expression of " << expression << " is " << st.infixTOPostfix(expression) << endl;
         }
         else if (n == 6)
