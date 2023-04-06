@@ -119,10 +119,10 @@ public:
     {
         for (int i = 0; i < exp.length(); i++)
         {
-            if ((exp[i] == '(' || exp[i] == '{' || exp[i] == '[') && top == -1)
+            if ((exp[i] == '(' || exp[i] == '{' || exp[i] == '['))
                 pushChar(exp[i]);
 
-            else if ((exp[i] == '(' || exp[i] == '{' || exp[i] == '[') && top != -1)
+            else if ((exp[i] == '(' || exp[i] == '{' || exp[i] == '['))
             {
                 if (precedence(exp[i]) < precedence(peekChar()))
                     pushChar(exp[i]);

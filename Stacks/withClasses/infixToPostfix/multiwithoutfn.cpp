@@ -5,30 +5,40 @@ class Stack
 {
 public:
     int size;
+    // arrays ---->
     char *postfixArray;
     char *paranthesisArray;
+    int *eval_array;
+    // tops ---->
     int TOP_array;
     int TOP_paranthesis;
+    int TOP_eval;
+    // constructor ---->
     Stack(int size)
     {
         this->size = size;
         postfixArray = new char[size];
         paranthesisArray = new char[size];
+        eval_array = new int[size];
         TOP_array = -1;
         TOP_paranthesis = -1;
+        TOP_eval = -1;
     }
 
     // Peek functions ------------>
     char peek() { return (TOP_array == -1) ? '\0' : postfixArray[TOP_array]; }
     char peekParan() { return (TOP_paranthesis == -1) ? '\0' : paranthesisArray[TOP_paranthesis]; }
+    int peekInt() { return (TOP_eval == -1) ? '\0' : eval_array[TOP_eval]; }
 
     // Pop functions ------------>
     char pop() { return (TOP_array == -1) ? '\0' : postfixArray[(TOP_array)--]; }
     char popParan() { return (TOP_paranthesis == -1) ? '\0' : paranthesisArray[(TOP_paranthesis)--]; }
+    int popInt() { return (TOP_eval == -1) ? '\0' : eval_array[(TOP_eval)--]; }
 
     // isEmpty functions ------------>
     bool isEmpty() { return TOP_array == -1 ? true : false; }
-    char isEmptyParan() { return TOP_paranthesis == -1 ? true : false; }
+    bool isEmptyParan() { return TOP_paranthesis == -1 ? true : false; }
+    bool isEmptyInt() { return TOP_eval == -1 ? true : false; }
 
     // Push functions ----------------->
     void push(char element)
@@ -43,6 +53,13 @@ public:
     {
         if (size - TOP_paranthesis > 1)
             paranthesisArray[++TOP_paranthesis] = element;
+        else
+            cout << "\nStack is FUll ----> " << endl;
+    }
+    void pushInt(int element)
+    {
+        if (size - TOP_eval > 1)
+            eval_array[++TOP_eval] = element;
         else
             cout << "\nStack is FUll ----> " << endl;
     }
@@ -166,7 +183,32 @@ public:
         return isEmptyParan() ? postfixExp : "\nExpression was invalid -->\n";
     }
 
-    void display()
+    int evaluation(string str)
+    {
+        for (int i = 0; i < str.length(); i++)
+        {
+            int cv = str[i] - '0';
+            if (cv >= 1 && cv <= 9)
+                pushInt(cv);
+            else
+            {
+                int a = popInt();
+                int b = popInt();
+                if (str[i] == '+')
+                    pushInt(a + b);
+                else if (str[i] == '-')
+                    pushInt(a > b ? a - b : b - a);
+                else if (str[i] == '*')
+                    pushInt(a * b);
+                else if (str[i] == '/')
+                    pushInt(a > b ? a / b : b / a);
+            }
+        }
+        return peekInt();
+    }
+
+    void
+    display()
     {
         for (int i = 0; i <= TOP_array; i++)
         {
@@ -177,7 +219,7 @@ public:
 
 int main()
 {
-    Stack st(10);
+    Stack st(20);
     int n;
     while (true)
     {
@@ -186,6 +228,7 @@ int main()
         // cout << "Press 3 to Peek element -->" << endl;
         // cout << "Press 4 for isEmpty() -->" << endl;
         cout << "\nPress 1 to convert Infix to Postfix -->" << endl;
+        cout << "Press 2 to evaluate Postfix -->" << endl;
         cout << "Press 0 to exit -->" << endl;
         cout << "Enter : ";
         cin >> n;
@@ -211,6 +254,11 @@ int main()
         {
             string expression = "A+B/C+D*{([E-F])}^G";
             cout << "\nPostfix expression of " << expression << " is " << st.infixTOPostfix(expression) << endl;
+        }
+        else if (n == 2)
+        {
+            string expression = "6523+8*+3+*";
+            cout << "\nPost fix after evaluation is : " << st.evaluation(expression) << endl;
         }
         else if (n == 6)
             st.display();
