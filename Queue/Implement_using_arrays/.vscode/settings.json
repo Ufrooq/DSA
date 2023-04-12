@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.java": "java",
+        "xstring": "cpp",
+        "xutility": "cpp"
+    }
+}
