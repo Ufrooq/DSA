@@ -64,8 +64,7 @@ public:
             return strArray[top];
     }
 
-    bool
-    checkPalindrome()
+    bool checkPalindrome()
     {
         for (int i = 0; i < size - 1; i++)
         {

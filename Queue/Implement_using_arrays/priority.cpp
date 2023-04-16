@@ -36,6 +36,20 @@ public:
                 front = (front + 1) % size;
         }
     }
+
+    void shiftRight(int *index)
+    {
+        int shift = rear;
+        while (shift != *index)
+        {
+            arr[shift + 1 % size] = arr[shift];
+            if (shift == 0)
+                shift = size - 1;
+            else
+                shift--;
+        }
+        arr[(shift + 1) % size] = arr[shift];
+    }
     void push(int elem)
     {
         if (isFull())
@@ -58,7 +72,9 @@ public:
                         arr[front] = elem;
                     }
                     else
+                    {
                         arr[--front] = elem;
+                    }
                 }
                 else if (elem > arr[rear])
                 {
@@ -68,19 +84,13 @@ public:
 
                 else
                 {
-                    int ck = front;
-                    while (elem > arr[ck] || ck != rear)
+                    int index = front;
+                    while (elem > arr[index])
                     {
-                        ck = (ck + 1) % size;
+                        index = (index + 1) % size;
                     }
-                    int shift = rear;
-                    while (shift != ck)
-                    {
-                        arr[shift + 1 % size] = arr[shift];
-                        shift--;
-                    }
-                    arr[(shift + 1) % size] = arr[shift];
-                    arr[ck] = elem;
+                    shiftRight(&index);
+                    arr[index] = elem;
                     rear = rear + 1 % size;
                 }
             }
@@ -94,10 +104,13 @@ public:
             cout << "Stack is empty ---->" << endl;
         else
         {
-            for (int i = front; i <= rear; i++)
+            int i = front;
+            while (i != rear)
             {
                 cout << arr[i] << " ";
+                i = ((i + 1) % size);
             }
+            cout << arr[i] << " ";
         }
     }
 };
