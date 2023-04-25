@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.java": "java",
+    "ostream": "cpp",
+    "iostream": "cpp",
+    "queue": "cpp"
+  }
+}
