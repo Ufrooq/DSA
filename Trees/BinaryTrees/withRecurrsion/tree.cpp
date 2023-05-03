@@ -35,7 +35,7 @@ public:
             return;
         }
         display(temp->left);
-        cout << temp->id << " ";
+        cout << temp->id << " ";    
         display(temp->right);
     }
 
@@ -67,6 +67,7 @@ public:
         }
     }
 };
+
 
 int main()
 {
