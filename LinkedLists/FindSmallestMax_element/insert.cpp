@@ -49,6 +49,7 @@ void findLeast()
     }
     cout << "\nLeast element is " << least->id << endl;
 }
+
 void findMost()
 {
     Node *crt = head1;

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 using namespace std;
 
 struct Node
@@ -44,23 +45,35 @@ void insert()
         }
     }
 }
-// void display()
-// {
-//     cout << "\nEnter id to display pattren : ";
-//     int x;
-//     cin >> x;
-//     Node *p = root;
-//     while (p != NULL && p->id != x)
-//     {
-//         cout << p->id << " ";
-//         if (x > p->id)
-//             p = p->right;
-//         else
-//             p = p->left;
-//     }
-//     if (p != NULL)
-//         cout << p->id;
-// }
+void levelOrderTraversal(Node *root)
+{
+    queue<Node *> q;
+    q.push(root);
+    q.push(NULL);
+    while (!q.empty())
+    {
+
+        Node *temp = q.front();
+        q.pop();
+
+        if (temp == NULL)
+        {
+            cout << endl;
+            if (!q.empty())
+            {
+                q.push(NULL);
+            }
+        }
+        else
+        {
+            cout << temp->id << " ";
+            if (temp->right)
+                q.push(temp->right);
+            if (temp->left)
+                q.push(temp->left);
+        }
+    }
+}
 
 void displayInorder(Node *temp)
 {
@@ -74,83 +87,6 @@ void displayInorder(Node *temp)
 }
 
 // ! code to delete fulll Node ----->
-// void deleteNode(int x)
-// {
-//     Node *del = root;
-//     Node *prev = NULL;
-//     while (del != NULL && del->id != x)
-//     {
-//         prev = del;
-//         if (x > del->id)
-//             del = del->right;
-//         else
-//             del = del->left;
-//     }
-//     if (del != NULL)
-//     {
-//         if (x > prev->id)
-//             prev->right = NULL;
-//         else
-//             prev->left = NULL;
-//     }
-//     else
-//         cout << "id not found !!" << endl;
-// }
-
-// Node *findMin(Node *root)
-// {
-//     Node *temp = root;
-//     while (temp->left != NULL)
-//     {
-//         temp = temp->left;
-//     }
-//     return temp;
-// }
-// Node *deleteBSTnode(Node *root, int val)
-// {
-
-//     if (root == NULL)
-//         return root;
-
-//     else if (root->id == val)
-//     {
-//         if (root->left == NULL && root->right == NULL)
-//         {
-//             delete root;
-//             return NULL;
-//         }
-//         else if (root->left != NULL && root->right == NULL)
-//         {
-//             Node *temp = root->left;
-//             delete root;
-//             return temp;
-//         }
-//         else if (root->right != NULL && root->left == NULL)
-//         {
-//             Node *temp = root->right;
-//             delete root;
-//             return temp;
-//         }
-//         else if (root->right != NULL && root->left != NULL)
-//         {
-//             int min = findMin(root->right)->id;
-//             root->id = min;
-//             root->right = deleteBSTnode(root->right, min);
-//             return root;
-//         }
-//     }
-//     else if (val < root->id)
-//     {
-//         root->left = deleteBSTnode(root->left, val);
-//         return root;
-//     }
-//     else if (val > root->id)
-//     {
-//         root->right = deleteBSTnode(root->right, val);
-//         return root;
-//     }
-// }
-
 Node *findMin(Node *root)
 {
     Node *temp = root;
@@ -164,12 +100,12 @@ Node *findMin(Node *root)
 int cnt = 0;
 void findLeafNodes(Node *temp)
 {
-    if (temp == NULL)
+    if (temp->left == NULL && temp->right == NULL)
     {
+        cnt++;
         return;
     }
     findLeafNodes(temp->left);
-    cnt++;
     findLeafNodes(temp->right);
 }
 
@@ -201,13 +137,14 @@ Node *findMax(Node *root)
     return temp;
 }
 
-Node *deleteBSTnode(Node *root, int val)
+Node *deleteBSTnode(Node *root, int x)
 {
+
     if (root == NULL)
     {
         return NULL;
     }
-    else if (root->id == val)
+    else if (root->id == x)
     {
         if (root->left == NULL && root->right == NULL)
         {
@@ -220,31 +157,86 @@ Node *deleteBSTnode(Node *root, int val)
             delete root;
             return temp;
         }
-        else if (root->left == NULL && root->right != NULL)
+        else if (root->right != NULL && root->left == NULL)
         {
             Node *temp = root->right;
             delete root;
             return temp;
         }
-        else if (root->left != NULL && root->right != NULL)
+        else if (root->right != NULL && root->left != NULL)
         {
             int min = findMin(root->right)->id;
-            cout << "Min value is : " << min << endl;
             root->id = min;
             root->right = deleteBSTnode(root->right, min);
             return root;
         }
     }
-    else if (val < root->id)
+
+    else if (x < root->id)
     {
-        root->left = deleteBSTnode(root->left, val);
+        root->left = deleteBSTnode(root->left, x);
         return root;
     }
-    else if (val > root->id)
+    else if (x > root->id)
     {
-        root->right = deleteBSTnode(root->right, val);
+        root->right = deleteBSTnode(root->right, x);
         return root;
     }
+}
+
+int findHeight(Node *root)
+{
+
+    if (root == NULL)
+    {
+        return 0;
+    }
+    int left = findHeight(root->left);
+    int right = findHeight(root->right);
+    int ans = max(left, right) + 1;
+    return ans;
+}
+
+int findDiameter(Node *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+        int opt1 = findDiameter(root->left);
+        int opt2 = findDiameter(root->right);
+        int opt3 = findHeight(root->left) + findHeight(root->right) + 1;
+        int ans = max(max(opt1, opt2), opt3);
+        return ans;
+    }
+}
+
+bool isBalanced(Node *root)
+{
+    if (root == NULL)
+    {
+        return true;
+    }
+    bool left = isBalanced(root->left);
+    bool right = isBalanced(root->right);
+    return findHeight(root->left) - findHeight(root->right) <= 1;
+}
+
+Node *rotation(Node *root)
+{
+
+    if (root == NULL)
+    {
+        return NULL;
+    }
+    int leftHeight = findHeight(root->left);
+    int rightHeight = findHeight(root->right);
+    int heightDiff = leftHeight - rightHeight;
+    if (heightDiff > 1)
+    {
+        return root;
+    }
+
+    return NULL;
 }
 
 int main()
@@ -259,6 +251,12 @@ int main()
         cout << "Enter 5 to find X  --->" << endl;
         cout << "Enter 6 to find Min Value   --->" << endl;
         cout << "Enter 7 to find Max Value   --->" << endl;
+        cout << "Enter 7 to find Max Value   --->" << endl;
+        cout << "Enter 8 for level traversal   --->" << endl;
+        cout << "Enter 9  to find height of Tree --->" << endl;
+        cout << "Enter 10  to find diameter of Tree --->" << endl;
+        cout << "Enter 11  to check Balanced AVL Tree --->" << endl;
+        cout << "Enter 12  for rotation  --->" << endl;
         cout << "Enter 0 to break --->" << endl;
         cout << "Enter : ";
         cin >> n;
@@ -266,6 +264,7 @@ int main()
             insert();
         else if (n == 2)
             displayInorder(root);
+
         else if (n == 3)
         {
             cout << "Enter node : " << endl;
@@ -276,7 +275,7 @@ int main()
         else if (n == 4)
         {
             findLeafNodes(root);
-            cout << "Leaf Nodes are " << cnt / 2 << endl;
+            cout << "Leaf Nodes are " << cnt << endl;
         }
         else if (n == 5)
         {
@@ -290,8 +289,33 @@ int main()
         }
         else if (n == 6)
             cout << "The min value is : " << findMin(root)->id << endl;
+
         else if (n == 7)
             cout << "The max value is : " << findMax(root)->id << endl;
+
+        else if (n == 8)
+        {
+            levelOrderTraversal(root);
+        }
+        else if (n == 9)
+        {
+            cout << "Height of Tree is : " << findHeight(root) << endl;
+        }
+        else if (n == 10)
+        {
+            cout << "Diameter of Tree is : " << findDiameter(root) << endl;
+        }
+        else if (n == 11)
+        {
+            if (isBalanced(root))
+                cout << "Tree is balanced !!" << endl;
+            else
+                cout << "Tree is UN-balanced !!" << endl;
+        }
+        else if (n == 12)
+        {
+            cout << "Ambigious Node is : " << rotation(root)->id << endl;
+        }
         else if (n == 0)
             break;
     }

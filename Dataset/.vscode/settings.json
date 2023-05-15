@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "*.java": "java",
+    "iosfwd": "cpp",
+    "iostream": "cpp",
+    "vector": "cpp",
+    "ostream": "cpp",
+    "xutility": "cpp"
+  }
+}

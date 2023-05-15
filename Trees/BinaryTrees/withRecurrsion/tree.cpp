@@ -35,7 +35,7 @@ public:
             return;
         }
         display(temp->left);
-        cout << temp->id << " ";    
+        cout << temp->id << " ";
         display(temp->right);
     }
 
@@ -46,8 +46,10 @@ public:
         q.push(NULL);
         while (!q.empty())
         {
+
             Node *temp = q.front();
             q.pop();
+
             if (temp == NULL)
             {
                 cout << endl;
@@ -67,7 +69,6 @@ public:
         }
     }
 };
-
 
 int main()
 {

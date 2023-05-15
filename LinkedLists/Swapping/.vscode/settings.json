@@ -1,7 +1,8 @@
 {
-    "files.associations": {
-        "*.java": "java",
-        "ostream": "cpp",
-        "iostream": "cpp"
-    }
+  "files.associations": {
+    "*.java": "java",
+    "ostream": "cpp",
+    "iostream": "cpp",
+    "utility": "cpp"
+  }
 }

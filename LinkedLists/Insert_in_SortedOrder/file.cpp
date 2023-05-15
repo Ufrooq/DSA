@@ -23,6 +23,11 @@ void insertSorted()
             current->next = head;
             head = current;
         }
+        else if (current->id > tail->id)
+        {
+            tail->next = current;
+            tail = tail->next;
+        }
         else
         {
             if (head->next == NULL)
@@ -39,8 +44,6 @@ void insertSorted()
                 }
                 current->next = ctrl->next;
                 ctrl->next = current;
-                if (ctrl->next == NULL)
-                    tail = current;
             }
         }
     }
