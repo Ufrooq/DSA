@@ -221,6 +221,17 @@ bool isBalanced(Node *root)
     return findHeight(root->left) - findHeight(root->right) <= 1;
 }
 
+int findDepth(Node *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    int leftDepth = findDepth(root->left);
+    int rightDepth = findDepth(root->right);
+    return (max(leftDepth, rightDepth) + 1);
+}
+
 Node *rotation(Node *root)
 {
 
@@ -228,15 +239,13 @@ Node *rotation(Node *root)
     {
         return NULL;
     }
-    int leftHeight = findHeight(root->left);
-    int rightHeight = findHeight(root->right);
-    int heightDiff = leftHeight - rightHeight;
-    if (heightDiff > 1)
+    Node *rootLeft = rotation(root->left);
+    Node *rootRight = rotation(root->right);
+    bool isValidNode = isBalanced(root);
+    if (!isValidNode && root != NULL)
     {
-        return root;
+        cout << "Ambigious Node is : " << root->id << endl;
     }
-
-    return NULL;
 }
 
 int main()
@@ -254,9 +263,10 @@ int main()
         cout << "Enter 7 to find Max Value   --->" << endl;
         cout << "Enter 8 for level traversal   --->" << endl;
         cout << "Enter 9  to find height of Tree --->" << endl;
-        cout << "Enter 10  to find diameter of Tree --->" << endl;
-        cout << "Enter 11  to check Balanced AVL Tree --->" << endl;
-        cout << "Enter 12  for rotation  --->" << endl;
+        cout << "Enter 10  to find depth of Tree --->" << endl;
+        cout << "Enter 11  to find diameter of Tree --->" << endl;
+        cout << "Enter 12  to check Balanced AVL Tree --->" << endl;
+        cout << "Enter 13  for rotation  --->" << endl;
         cout << "Enter 0 to break --->" << endl;
         cout << "Enter : ";
         cin >> n;
@@ -303,16 +313,20 @@ int main()
         }
         else if (n == 10)
         {
-            cout << "Diameter of Tree is : " << findDiameter(root) << endl;
+            cout << "Height of Tree is : " << findDepth(root) << endl;
         }
         else if (n == 11)
+        {
+            cout << "Diameter of Tree is : " << findDiameter(root) << endl;
+        }
+        else if (n == 12)
         {
             if (isBalanced(root))
                 cout << "Tree is balanced !!" << endl;
             else
                 cout << "Tree is UN-balanced !!" << endl;
         }
-        else if (n == 12)
+        else if (n == 13)
         {
             cout << "Ambigious Node is : " << rotation(root)->id << endl;
         }

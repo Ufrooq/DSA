@@ -104,7 +104,6 @@ void deleteNode(int validation)
                 trave->next->prv = trave->prv;
             }
         }
-
         trave = trave->next;
     }
 }
