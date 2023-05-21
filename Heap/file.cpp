@@ -5,24 +5,24 @@ class Heap
 {
 public:
     int *arr;
-    int size;
+    int top;
     Heap(int len)
     {
         arr = new int[len];
-        size = 0;
+        top = -1;
     }
 
     void insertNode(int val)
     {
-        arr[++size] = val;
-        int index = size;
-        while (index > 1)
+        arr[++top] = val;
+        int index = top;
+        while (index > 0)
         {
-            int parent = index / 2;
-            if (arr[index] > arr[parent])
+            int parent_of_i = (index - 1) / 2;
+            if (arr[index] > arr[parent_of_i])
             {
-                swap(arr[index], arr[parent]);
-                index = parent;
+                swap(arr[index], arr[parent_of_i]);
+                index = parent_of_i;
             }
             else
             {
@@ -33,35 +33,36 @@ public:
 
     void deleteNode()
     {
-        if (size == 0)
+        if (top == -1)
         {
-            cout << "No data is present for now !!" << endl;
-            return;
+            cout << "No data to delete for now !" << endl;
         }
         else
         {
-            arr[1] = arr[size];
-            size--;
-            // Propogation of root node to its correct position in the Heap -->
-            int i = 1;
-            while (i < size)
+            arr[0] = arr[top];
+            top--;
+            int i = 0;
+            while (i < top)
             {
-                int leftIndex = 2 * i;
-                int rightIndex = (2 * i) + 1;
 
-                if (leftIndex < size && arr[i] < arr[leftIndex])
+                int leftIndex = (2 * i) + 1;
+                int rightIndex = (2 * i) + 2;
+                while (i < top)
                 {
-                    swap(arr[i], arr[leftIndex]);
-                    i = leftIndex;
-                }
-                else if (rightIndex < size && arr[i] < arr[rightIndex])
-                {
-                    swap(arr[i], arr[rightIndex]);
-                    i = rightIndex;
-                }
-                else
-                {
-                    return;
+                    if (leftIndex < top && arr[i] < leftIndex)
+                    {
+                        swap(arr[i], arr[leftIndex]);
+                        i = leftIndex;
+                    }
+                    else if (rightIndex < top && arr[i] < rightIndex)
+                    {
+                        swap(arr[i], arr[rightIndex]);
+                        i = rightIndex;
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
             }
         }
@@ -69,7 +70,7 @@ public:
 
     void print()
     {
-        for (int i = 1; i <= size; i++)
+        for (int i = 0; i <= top; i++)
         {
             cout << arr[i] << " ";
         }
@@ -79,11 +80,11 @@ public:
 int main()
 {
     Heap hp(100);
+    hp.insertNode(60);
     hp.insertNode(50);
     hp.insertNode(55);
-    hp.insertNode(53);
-    hp.insertNode(52);
-    hp.insertNode(54);
+    hp.insertNode(59);
+    hp.insertNode(75);
     hp.print();
     hp.deleteNode();
     hp.print();

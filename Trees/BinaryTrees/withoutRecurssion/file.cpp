@@ -139,7 +139,6 @@ Node *findMax(Node *root)
 
 Node *deleteBSTnode(Node *root, int x)
 {
-
     if (root == NULL)
     {
         return NULL;

@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.java": "java",
+        "unordered_map": "cpp",
+        "queue": "cpp"
+    }
+}
