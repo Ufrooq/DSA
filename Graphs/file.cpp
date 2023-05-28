@@ -22,25 +22,12 @@ public:
         }
     }
 
-    void printList()
-    {
-        for (auto i : adjList)
-        {
-            cout << i.first << "-->";
-            cout << " { ";
-            for (auto j : i.second)
-            {
-                cout << j << ", ";
-            }
-            cout << "}\n";
-        }
-    }
-
     void BFS(int srcVertex, bool *isVisited)
     {
         queue<int> q;
         q.push(srcVertex);
         isVisited[srcVertex] = true;
+        cout << "BFS Output : ";
         while (!q.empty())
         {
             int temp = q.front();
@@ -55,6 +42,23 @@ public:
                 }
             }
         }
+    }
+
+    void printList()
+    {
+        cout << "Adjency List is : " << endl;
+        cout << "----------------------" << endl;
+        for (auto i : adjList)
+        {
+            cout << i.first << "-->";
+            cout << " { ";
+            for (auto j : i.second)
+            {
+                cout << j << ", ";
+            }
+            cout << "}\n";
+        }
+        cout << "------------------------" << endl;
     }
 };
 
@@ -79,7 +83,7 @@ int main()
         g.addEdge(k, v, 0);
     }
     g.printList();
-    g.BFS(0, isVisited);
+    g.BFS(1, isVisited);
 
     return 0;
 };

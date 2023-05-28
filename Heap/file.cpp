@@ -44,17 +44,17 @@ public:
             int i = 0;
             while (i < top)
             {
-
                 int leftIndex = (2 * i) + 1;
                 int rightIndex = (2 * i) + 2;
+                int smallestIndex = min(arr[leftIndex], arr[rightIndex]);
                 while (i < top)
                 {
-                    if (leftIndex < top && arr[i] < leftIndex)
+                    if ((arr[leftIndex] < arr[top]) && (arr[i] < arr[leftIndex]) && (arr[leftIndex] == smallestIndex))
                     {
                         swap(arr[i], arr[leftIndex]);
                         i = leftIndex;
                     }
-                    else if (rightIndex < top && arr[i] < rightIndex)
+                    else if ((arr[rightIndex] < arr[top]) && (arr[i] < arr[rightIndex]) && (arr[rightIndex] == smallestIndex))
                     {
                         swap(arr[i], arr[rightIndex]);
                         i = rightIndex;

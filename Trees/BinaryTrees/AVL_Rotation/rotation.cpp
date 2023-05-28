@@ -46,7 +46,6 @@ Node *rightRotate(Node *x)
 }
 Node *leftRotate(Node *x)
 {
-
     Node *y = x->right;
     x->right = y->left;
     y->left = x;
@@ -94,13 +93,11 @@ Node *createNode(int newData)
 
 Node *insert(Node *root, int data)
 {
-
     //* Insertion Code ------------>
     if (root == NULL)
     {
         return (createNode(data));
     }
-
     if (data < root->id)
     {
         root->left = insert(root->left, data);
@@ -109,7 +106,6 @@ Node *insert(Node *root, int data)
     {
         root->right = insert(root->right, data);
     }
-
     // *finding height and balance factor of nodes --->
     root->height = 1 + max(getHeight(root->left), getHeight(root->right));
     int balanceFactor = getBalanceFactor(root);
