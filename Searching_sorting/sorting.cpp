@@ -39,11 +39,29 @@ void selectionSort(int arr[], int s)
     }
 }
 
+void insertionSort(int arr[], int size)
+{
+
+    for (int i = 1; i < size; i++)
+    {
+        int temp = arr[i];
+        int j;
+        for (j = i - 1; j >= 0; j++)
+        {
+            if (arr[j] > temp)
+                arr[j + 1] = arr[j];
+            else
+                break;
+        }
+        arr[j + 1] = temp;
+    }
+}
+
 void bubbleSort(int arr[], int s)
 {
     for (int i = 0; i < s - 1; i++)
     {
-        for (int j = 0; j < s - 1; j++)
+        for (int j = 0; j < s - i; j++)
         {
             if (arr[j] > arr[j + 1])
             {
@@ -58,7 +76,7 @@ int main()
 
     int arr[10] = {34, 6, 4, 3, 7, 9, 14, 22, 23, 31};
     int size = 10;
-    mergeSort(arr, 0, size - 1);
+    insertionSort(arr, size);
     for (int i = 0; i < 10; i++)
     {
         cout << arr[i] << " ";
