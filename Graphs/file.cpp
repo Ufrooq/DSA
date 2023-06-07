@@ -1,14 +1,15 @@
 #include <iostream>
-#include <unordered_map>
+#include <map>
 #include <list>
 #include <vector>
 #include <queue>
+#include <stack>
 using namespace std;
 
 class Graph
 {
 public:
-    unordered_map<int, list<int>> adjList;
+    map<int, list<int>> adjList;
     void addEdge(int k, int v, bool direction)
     {
         // direction == 0 ---> un-directed graph
@@ -27,18 +28,39 @@ public:
         queue<int> q;
         q.push(srcVertex);
         isVisited[srcVertex] = true;
-        cout << "BFS Output : ";
+        cout << "BFS output is : ";
         while (!q.empty())
         {
             int temp = q.front();
-            q.pop();
             cout << temp << " ";
-            for (auto neighbor : adjList[temp])
+            q.pop();
+            for (auto neighbours : adjList[temp])
             {
-                if (!isVisited[neighbor])
+                if (!isVisited[neighbours])
                 {
-                    q.push(neighbor);
-                    isVisited[neighbor] = true;
+                    q.push(neighbours);
+                    isVisited[neighbours] = true;
+                }
+            }
+        }
+    }
+    void DFS(int srcVertex, bool *isVisited)
+    {
+        stack<int> st;
+        st.push(srcVertex);
+        isVisited[srcVertex] = true;
+        cout << "DFS output is : ";
+        while (!st.empty())
+        {
+            int temp = st.top();
+            cout << temp << " ";
+            st.pop();
+            for (auto neighbours : adjList[temp])
+            {
+                if (!isVisited[neighbours])
+                {
+                    st.push(neighbours);
+                    isVisited[neighbours] = true;
                 }
             }
         }
@@ -83,7 +105,7 @@ int main()
         g.addEdge(k, v, 0);
     }
     g.printList();
-    g.BFS(1, isVisited);
+    g.DFS(1, isVisited);
 
     return 0;
 };

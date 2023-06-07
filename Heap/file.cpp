@@ -80,11 +80,10 @@ public:
 int main()
 {
     Heap hp(100);
-    hp.insertNode(60);
-    hp.insertNode(50);
-    hp.insertNode(55);
-    hp.insertNode(59);
-    hp.insertNode(75);
+    hp.insertNode(20);
+    hp.insertNode(30);
+    hp.insertNode(40);
+    hp.insertNode(25);
     hp.print();
     hp.deleteNode();
     hp.print();
