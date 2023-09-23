@@ -1,7 +1,8 @@
 {
-    "files.associations": {
-        "*.java": "java",
-        "queue": "cpp",
-        "stack": "cpp"
-    }
+  "files.associations": {
+    "*.java": "java",
+    "queue": "cpp",
+    "stack": "cpp",
+    "iostream": "cpp"
+  }
 }

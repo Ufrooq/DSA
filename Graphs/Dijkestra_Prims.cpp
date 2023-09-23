@@ -25,43 +25,35 @@ public:
     void Prims(int source)
     {
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        vector<int> dist(no_of_vertex);
-        vector<int> parent(no_of_vertex);
-        vector<bool> visited(no_of_vertex);
-
         // initilization ---->
-        for (int i = 0; i < no_of_vertex; i++)
-        {
-            dist[i] = INT_MAX;
-            visited[i] = false;
-            parent[i] = -1;
-        }
+        vector<int> dist(no_of_vertex, INT_MAX);
+        vector<int> parent(no_of_vertex, -1);
+        vector<bool> visited(no_of_vertex, false);
 
         // source node input -->
         dist[source] = 0;
         parent[source] = -1;
-        pq.push({0, source});
-
+        pq.push(make_pair(0, source));
         while (!pq.empty())
         {
 
             // find min node -->
             int minNodeDistance = pq.top().first;
             int minNode = pq.top().second;
+            visited[minNode] = true;
             pq.pop();
 
             // neighbours work -->
-            visited[minNode] = true;
             for (auto nb : adjMatrix[minNode])
             {
-                int val = nb.first;
+                int id = nb.first;
                 int wet = nb.second;
 
-                if (!visited[val] && wet < dist[val])
+                if (!visited[id] && wet < dist[id])
                 {
-                    parent[val] = minNode;
-                    dist[val] = wet;
-                    pq.push({dist[val], val});
+                    parent[id] = minNode;
+                    dist[id] = wet;
+                    pq.push(make_pair(dist[id], id));
                 }
             }
         }
@@ -98,11 +90,7 @@ public:
     vector<int>
     Dijkastra(int source)
     {
-        vector<int> dist(no_of_vertex);
-        for (int i = 0; i < no_of_vertex; i++)
-        {
-            dist[i] = INT_MAX;
-        }
+        vector<int> dist(no_of_vertex, INT_MAX);
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
         // ------> pair(weight , node);
         dist[source] = 0;
@@ -118,6 +106,7 @@ public:
             {
                 if ((currentNodeDistance + neighbour.second) < dist[neighbour.first])
                 {
+                    cout << currentNode << " ";
                     // update distance :
                     dist[neighbour.first] = currentNodeDistance + neighbour.second;
                     // add record as a pair as make_pair(newUpdatedWeitage , newNode);
@@ -130,14 +119,14 @@ public:
     }
 
     // Djkestra input --->
-    // 0 4 5
-    // 0 2 10
-    // 0 3 15
-    // 1 2 2
-    // 2 4 3
-    // 3 1 8
-    // 4 1 1
-    // 4 2 4
+    // s s4 5
+    // s s2 10
+    // s s3 15
+    // s1 s2 2
+    // s2 s4 3
+    // s3 s1 8
+    // s4 s1 1
+    // s4 s2 4
 
     // Prims input -->
     //  0 1 3
@@ -211,10 +200,10 @@ int main()
     int source;
     cout << "Enter the source vertex: ";
     cin >> source;
-    g.Prims(source);
-    // for (int i = 0; i < result.size(); i++)
-    // {
-    //     cout << result[i] << " ";
-    // }
+    vector<int> result = g.Dijkastra(source);
+    for (int i = 0; i < result.size(); i++)
+    {
+        cout << "Distance from " << source << " to " << i << " is " << result[i] << endl;
+    }
     return 0;
 };

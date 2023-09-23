@@ -68,9 +68,7 @@ void selectionSort(int arr[], int s)
     for (int i = 0; i < s - 1; i++)
     {
         int min = i;
-        int swaps = 0;
-        int j;
-        for (j = i + 1; j < s; j++)
+        for (int j = i + 1; j < s; j++)
         {
             if (arr[j] < arr[min])
             {

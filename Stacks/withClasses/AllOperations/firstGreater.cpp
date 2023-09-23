@@ -57,6 +57,5 @@ int main()
     }
 
     firstGreater(array, size);
-    firstGreatest(array, size);
     return 0;
 };

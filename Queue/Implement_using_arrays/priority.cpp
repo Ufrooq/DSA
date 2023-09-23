@@ -50,6 +50,7 @@ public:
         }
         arr[(shift + 1) % size] = arr[shift];
     }
+
     void push(int elem)
     {
         if (isFull())
@@ -78,10 +79,9 @@ public:
                 }
                 else if (elem > arr[rear])
                 {
-                    rear = rear + 1 % size;
+                    rear = (rear + 1) % size;
                     arr[rear] = elem;
                 }
-
                 else
                 {
                     int index = front;
@@ -99,7 +99,6 @@ public:
 
     void display()
     {
-
         if (isEmpty())
             cout << "Stack is empty ---->" << endl;
         else

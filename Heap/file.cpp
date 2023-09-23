@@ -16,7 +16,7 @@ public:
     {
         arr[++top] = val;
         int index = top;
-        while (index > 0)
+        while (index >= 0)
         {
             int parent_of_i = (index - 1) / 2;
             if (arr[index] > arr[parent_of_i])

@@ -130,9 +130,9 @@ Node *findMax(Node *root)
 {
 
     Node *temp = root;
-    while (temp->right != NULL)
+    while (temp->left != NULL)
     {
-        temp = temp->right;
+        temp = temp->left;
     }
     return temp;
 }

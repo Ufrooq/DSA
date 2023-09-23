@@ -120,7 +120,6 @@ public:
         {
             if ((exp[i] == '(' || exp[i] == '{' || exp[i] == '['))
                 pushChar(exp[i]);
-
             else if ((exp[i] == '(' || exp[i] == '{' || exp[i] == '['))
             {
                 if (precedence(exp[i]) < precedence(peekChar()))
